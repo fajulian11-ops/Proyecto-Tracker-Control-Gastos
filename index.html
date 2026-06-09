@@ -68,5 +68,42 @@
   <script src="js/gastos.js"></script>
   <script src="js/categorias.js"></script>
   <script src="js/presupuestos.js"></script>
+<script>
+  function navigate(page) {
+    // Limpiar contenido
+    document.getElementById("main-content").innerHTML = "";
+
+    // Actualizar link activo en el sidebar
+    document.querySelectorAll(".nav-link").forEach(function(link) {
+      link.classList.remove("active-link", "text-indigo-600", "bg-indigo-50", "font-medium");
+      link.classList.add("text-gray-500");
+    });
+
+    let activeLink = document.querySelector(`[data-page="${page}"]`);
+    if (activeLink) {
+      activeLink.classList.add("active-link", "text-indigo-600", "bg-indigo-50", "font-medium");
+      activeLink.classList.remove("text-gray-500");
+    }
+
+    // Cargar la página correspondiente
+    if (page === "dashboard") renderDashboard();
+    if (page === "gastos") renderGastos();
+    if (page === "categorias") renderCategorias();
+    if (page === "presupuestos") renderPresupuestos();
+  }
+
+  // Eventos del sidebar
+  document.querySelectorAll(".nav-link").forEach(function(link) {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      navigate(this.dataset.page);
+    });
+  });
+
+  // Cargar dashboard al inicio
+  navigate("dashboard");
+
+</script>
+
 </body>
 </html>
