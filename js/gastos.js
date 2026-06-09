@@ -7,13 +7,13 @@ async function renderGastos() {
 
     <div class="bg-white rounded-2xl border border-gray-100">
 
-      <!-- HEADER -->
+      <!-- HEADER DE TABLA -->
       <div class="flex justify-between items-center p-5 border-b border-gray-50">
         <span class="text-sm font-medium text-gray-800">Listado de gastos</span>
         <button onclick="mostrarFormulario()" class="text-xs bg-indigo-600 text-white px-3 py-2 rounded-lg">+ Agregar</button>
       </div>
 
-      <!-- TABLA -->
+      <!-- TABLA DE GASTOS -->
       <table class="w-full text-sm">
         <thead>
           <tr class="text-xs text-gray-400 border-b border-gray-100">
@@ -27,7 +27,7 @@ async function renderGastos() {
         <tbody id="tbody-gastos"></tbody>
       </table>
 
-      <!-- FORMULARIO INLINE -->
+      <!-- FORMULARIO GASTOS NUEVO -->
       <div id="formulario-gasto" class="hidden bg-gray-50 border-t border-gray-100 p-5">
         <p class="text-sm font-medium text-gray-800 mb-4" id="form-titulo">Nuevo gasto</p>
         <div class="grid grid-cols-2 gap-3 mb-3">
@@ -161,7 +161,7 @@ async function editarGasto(id) {
 }
 
 async function eliminarGasto(id) {
-  if (confirm("¿Eliminás este gasto?")) {
+  if (confirm("¿Eliminar gasto?")) {
     await api.deleteGasto(id);
     await cargarGastos();
   }
