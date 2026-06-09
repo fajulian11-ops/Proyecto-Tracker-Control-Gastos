@@ -1,0 +1,46 @@
+{
+  "gastos": [
+    {
+      "id": 1,
+      "descripcion": "Supermercado",
+      "monto": 8500,
+      "fecha": "2026-06-05",
+      "categoriaId": 1
+    },
+    {
+      "id": 2,
+      "descripcion": "Uber",
+      "monto": 1500,
+      "fecha": "2026-06-04",
+      "categoriaId": 2
+    },
+    {
+      "id": 3,
+      "descripcion": "HBO",
+      "monto": 4300,
+      "fecha": "2026-06-01",
+      "categoriaId": 3
+    },
+    {
+      "id": 4,
+      "descripcion": "Alquiler",
+      "monto": 29500,
+      "fecha": "2026-06-01",
+      "categoriaId": 4
+    }
+  ],
+  "categorias": [
+    { "id": 1, "nombre": "Comida" },
+    { "id": 2, "nombre": "Transporte" },
+    { "id": 3, "nombre": "Servicios Digitales" },
+    { "id": 4, "nombre": "Vivienda" },
+    { "id": 5, "nombre": "Salud" }
+  ],
+  "presupuestos": [
+    {
+      "id": 1,
+      "mes": "2026-06",
+      "monto": 60000
+    }
+  ]
+}
