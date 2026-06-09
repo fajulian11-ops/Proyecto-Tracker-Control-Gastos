@@ -30,11 +30,11 @@
     }
   ],
   "categorias": [
-    { "id": 1, "nombre": "Comida" },
-    { "id": 2, "nombre": "Transporte" },
-    { "id": 3, "nombre": "Servicios Digitales" },
-    { "id": 4, "nombre": "Vivienda" },
-    { "id": 5, "nombre": "Salud" }
+    { "id": 1, "nombre": "Comida", "icono": "🛒", "color": "#eef2ff" },
+    { "id": 2, "nombre": "Transporte", "icono": "🚌", "color": "#eff6ff" },
+    { "id": 3, "nombre": "Servicios Digitales", "icono": "🎮", "color": "#f5f3ff" },
+    { "id": 4, "nombre": "Vivienda", "icono": "🏠", "color": "#fff7ed" },
+    { "id": 5, "nombre": "Salud", "icono": "💊", "color": "#f0fdf4" }
   ],
   "presupuestos": [
     {
