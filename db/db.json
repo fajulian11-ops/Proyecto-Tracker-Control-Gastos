@@ -30,15 +30,40 @@
     }
   ],
   "categorias": [
-    { "id": 1, "nombre": "Comida", "icono": "🛒", "color": "#eef2ff" },
-    { "id": 2, "nombre": "Transporte", "icono": "🚌", "color": "#eff6ff" },
-    { "id": 3, "nombre": "Servicios Digitales", "icono": "🎮", "color": "#f5f3ff" },
-    { "id": 4, "nombre": "Vivienda", "icono": "🏠", "color": "#fff7ed" },
-    { "id": 5, "nombre": "Salud", "icono": "💊", "color": "#f0fdf4" }
+    {
+      "id": "1",
+      "nombre": "Comida",
+      "icono": "🛒",
+      "color": "#eef2ff"
+    },
+    {
+      "id": "2",
+      "nombre": "Transporte",
+      "icono": "🚌",
+      "color": "#eff6ff"
+    },
+    {
+      "id": "3",
+      "nombre": "Servicios Digitales",
+      "icono": "🎮",
+      "color": "#f5f3ff"
+    },
+    {
+      "id": "4",
+      "nombre": "Vivienda",
+      "icono": "🏠",
+      "color": "#fff7ed"
+    },
+    {
+      "id": "5",
+      "nombre": "Salud",
+      "icono": "💊",
+      "color": "#f0fdf4"
+    }
   ],
   "presupuestos": [
     {
-      "id": 1,
+      "id": "1",
       "mes": "2026-06",
       "monto": 60000
     }
