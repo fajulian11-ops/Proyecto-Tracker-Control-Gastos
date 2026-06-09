@@ -70,6 +70,7 @@ async function cargarGastos() {
 
   const gastos = resGastos.data;
   const categorias = resCategorias.data;
+  
 
   // Llenar select de categorías
   const select = document.getElementById("input-categoria");
@@ -129,6 +130,11 @@ async function guardarGasto() {
   const monto = Number(document.getElementById("input-monto").value);
   const fecha = document.getElementById("input-fecha").value;
   const categoriaId = Number(document.getElementById("input-categoria").value);
+    console.log("descripcion:", descripcion);
+console.log("monto:", monto);
+console.log("fecha:", fecha);
+console.log("categoriaId:", categoriaId);
+
 
   if (!descripcion || !monto || !fecha || !categoriaId) {
     alert("Completá todos los campos");
@@ -138,9 +144,9 @@ async function guardarGasto() {
   const gasto = { descripcion, monto, fecha, categoriaId };
 
   if (gastoEditandoId) {
-    await api.updateGasto(gastoEditandoId, gasto);
+    await api.updateGastos(gastoEditandoId, gasto);
   } else {
-    await api.createGasto(gasto);
+    await api.createGastos(gasto);
   }
 
   ocultarFormulario();
@@ -162,7 +168,7 @@ async function editarGasto(id) {
 
 async function eliminarGasto(id) {
   if (confirm("¿Eliminar gasto?")) {
-    await api.deleteGasto(id);
+    await api.deleteGastos(id);
     await cargarGastos();
   }
 }

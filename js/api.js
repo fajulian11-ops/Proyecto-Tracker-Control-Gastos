@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:3000";
 const api = {
   // GASTOS
   getGastos: function() {return axios.get(`${BASE_URL}/gastos`)},
-  createGastos:function(data){return axios.post(`${BASE_URL}/gastos`),data},
+  createGastos:function(data){return axios.post(`${BASE_URL}/gastos`,data)},
   updateGastos:function(id,data){return axios.put(`${BASE_URL}/gastos/${id}`,data)},
   deleteGastos:function(id){return axios.delete(`${BASE_URL}/gastos/${id}`)},
 
