@@ -3,7 +3,7 @@ __# Proyecto-Tracker-Control-Gastos__
 
 __# Clonar:__
 git clone https://github.com/fajulian11-ops/Proyecto-Tracker-Control-Gastos
-cd tracker-gastos
+cd Proyecto-Tracker-Control-Gastos
 
 __#PUSHEAR UNICAMENTE EN EL DEVELOP__
 __# Pararse en develop:__ 
