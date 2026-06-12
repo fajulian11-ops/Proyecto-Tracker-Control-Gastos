@@ -70,6 +70,58 @@ async function renderPresupuestos() {
       <div id="lista-categorias" class="p-5"></div>
     </div>
   `;
+  await cargarPresupuestos();
+}
+async function cargarPresupuestos(){
+  const mes= new Date().toISOString().slice(0,7);
 
-  
+  //pido los datos a la appi 
+
+  const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
+  const resGastos = await axios.get("http://localhost:3000/gastos");
+
+  const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
+  const gastos = resGastos.data;
+  if (!presupuesto){
+    document.getElementById("presupuesto-monto").textContent= "Sin presupuesto";
+  return;
+  }
+  const totalGastado = gastos.reduce((acc ,g) =>acc+ g.monto,0);
+  const disponible = presupuesto.limite - totalGastado;
+
+  //calculo de cuanto porcentaje del presupuesto de uso 
+  const porcentaje = Math.min(Math.round(totalGastado / presupuesto.limite*100),100);
+
+  document.getElementById("presupuesto-monto").textContent=`$${presupuesto.limite.toLocaleString()}`;
+  document.getElementById("presupuesto-gastado").textContent = `Gastado: $${totalGastado.toLocaleString()}`;
+  document.getElementById("presupuesto-pct").textContent = `${porcentaje}% usado`;
+  document.getElementById("presupuesto-bar").style.width = `${porcentaje}%`;
+  document.getElementById("stat-presupuesto").textContent = `$${presupuesto.limite.toLocaleString()}`;
+  document.getElementById("stat-gastado").textContent = `$${totalGastado.toLocaleString()}`;
+
+document.getElementById("stat-disponible").textContent = `$${disponible.toLocaleString()}`;
+}
+
+//presupuesto mensual BOTON
+function mostrarFormularioPresupuesto(){
+  document.getElementById("formulario-presupuesto").classList.remove("hidden");
+}
+function ocultarFormularioPresupuesto(){
+  document.getElementById("formulario-presupuesto").classList.add("hidden");
+}
+
+//boton guardar presupuesto (enviarlos a la api)
+async function guardarPresupuesto(){
+const monto= document.getElementById("input-monto-presupuesto").value;
+const mes= document.getElementById("input-mes-presupuesto").value;
+const resPresupuestos =await axios.get("http://localhost:3000/presupuestos");
+const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
+if (presupuesto) {
+    await axios.patch(`http://localhost:3000/presupuestos/${presupuesto.id}`, { limite: Number(monto), mes });
+  } else {
+    await axios.post("http://localhost:3000/presupuestos", { limite: Number(monto), mes });
+  }
+  // .patch (edita) .post (crea)
+  ocultarFormularioPresupuesto();
+  await cargarPresupuestos();
 }
