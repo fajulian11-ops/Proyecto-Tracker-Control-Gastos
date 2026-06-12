@@ -1,32 +1,25 @@
 {
   "gastos": [
     {
-      "id": 1,
-      "descripcion": "Supermercado",
-      "monto": 8500,
-      "fecha": "2026-06-05",
-      "categoriaId": 1
-    },
-    {
-      "id": 2,
-      "descripcion": "Uber",
-      "monto": 1500,
-      "fecha": "2026-06-04",
-      "categoriaId": 2
-    },
-    {
-      "id": 3,
+      "id": "3",
       "descripcion": "HBO",
       "monto": 4300,
       "fecha": "2026-06-01",
       "categoriaId": 3
     },
     {
-      "id": 4,
+      "id": "4",
       "descripcion": "Alquiler",
       "monto": 29500,
       "fecha": "2026-06-01",
       "categoriaId": 4
+    },
+    {
+      "descripcion": "hola",
+      "monto": 150000,
+      "fecha": "2026-06-12",
+      "categoriaId": 5,
+      "id": "FLf34BrD3wU"
     }
   ],
   "categorias": [
@@ -65,7 +58,8 @@
     {
       "id": "1",
       "mes": "2026-06",
-      "monto": 60000
+      "limite": 200
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
