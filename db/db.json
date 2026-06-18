@@ -56,9 +56,14 @@
   ],
   "presupuestos": [
     {
-      "id": "1",
-      "mes": "2026-06",
-      "limite": 200
+      "monto": 0,
+      "mes": "2026-04",
+      "id": "s4XwQr_K_PM"
+    },
+    {
+      "monto": 500000,
+      "mes": "",
+      "id": "-Xz8hIMZibs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
