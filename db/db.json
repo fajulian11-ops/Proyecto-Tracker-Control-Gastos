@@ -1,13 +1,6 @@
 {
   "gastos": [
     {
-      "id": 1,
-      "descripcion": "Supermercado",
-      "monto": 8500,
-      "fecha": "2026-06-05",
-      "categoriaId": 1
-    },
-    {
       "id": 2,
       "descripcion": "Uber",
       "monto": 1500,
