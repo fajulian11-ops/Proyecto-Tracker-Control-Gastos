@@ -1,76 +1,46 @@
 {
- "gastos": [
-  {
-    "id": "2",
-    "descripcion": "Uber",
-    "monto": 1500,
-    "fecha": "2026-06-04",
-    "categoriaId": 2
-  },
-  {
-    "id": "3",
-    "descripcion": "HBO",
-    "monto": 4300,
-    "fecha": "2026-06-01",
-    "categoriaId": 3
-  },
-  {
-    "id": "4",
-    "descripcion": "Alquiler",
-    "monto": 29500,
-    "fecha": "2026-06-01",
-    "categoriaId": 4
-  },
-  {
-    "descripcion": "hola",
-    "monto": 150000,
-    "fecha": "2026-06-12",
-    "categoriaId": 5,
-    "id": "FLf34BrD3wU"
-  }
-]
-  "categorias": [
-    {
-      "id": "1",
-      "nombre": "Comida",
-      "icono": "🛒",
-      "color": "#eef2ff"
-    },
+  "gastos": [
     {
       "id": "2",
-      "nombre": "Transporte",
-      "icono": "🚌",
-      "color": "#eff6ff"
+      "descripcion": "Uber",
+      "monto": 1500,
+      "fecha": "2026-06-04",
+      "categoriaId": 2
     },
     {
       "id": "3",
-      "nombre": "Servicios Digitales",
-      "icono": "🎮",
-      "color": "#f5f3ff"
+      "descripcion": "HBO",
+      "monto": 4300,
+      "fecha": "2026-06-01",
+      "categoriaId": 3
     },
     {
       "id": "4",
-      "nombre": "Vivienda",
-      "icono": "🏠",
-      "color": "#fff7ed"
+      "descripcion": "Alquiler",
+      "monto": 29500,
+      "fecha": "2026-06-01",
+      "categoriaId": 4
     },
     {
-      "id": "5",
-      "nombre": "Salud",
-      "icono": "💊",
-      "color": "#f0fdf4"
+      "descripcion": "hola",
+      "monto": 150000,
+      "fecha": "2026-06-12",
+      "categoriaId": 5,
+      "id": "FLf34BrD3wU"
     }
+  ],
+  "categorias": [
+    { "id": 1, "nombre": "Comida", "icono": "🛒", "color": "#eef2ff" },
+    { "id": 2, "nombre": "Transporte", "icono": "🚌", "color": "#eff6ff" },
+    { "id": 3, "nombre": "Servicios Digitales", "icono": "🎮", "color": "#f5f3ff" },
+    { "id": 4, "nombre": "Vivienda", "icono": "🏠", "color": "#fff7ed" },
+    { "id": 5, "nombre": "Salud", "icono": "💊", "color": "#f0fdf4" }
   ],
   "presupuestos": [
     {
-      "monto": 0,
-      "mes": "2026-04",
-      "id": "s4XwQr_K_PM"
-    },
-    {
-      "monto": 500000,
-      "mes": "",
-      "id": "-Xz8hIMZibs"
+      "id": 1,
+      "mes": "2026-06",
+      "monto": 75000
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

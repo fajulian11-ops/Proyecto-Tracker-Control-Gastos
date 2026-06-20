@@ -125,7 +125,6 @@ async function guardarPresupuesto() {
   // .patch (edita) .post (crea)
   ocultarFormularioPresupuesto();
   await cargarPresupuestos();
-
 }
 
 //eliminar presupuesto 
