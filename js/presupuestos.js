@@ -76,7 +76,6 @@ async function renderPresupuestos() {
 async function cargarPresupuestos() {
   const mes = new Date().toISOString().slice(0, 7);
 
-  
   //pido los datos a la appi 
 
   const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
@@ -126,7 +125,6 @@ async function guardarPresupuesto() {
   // .patch (edita) .post (crea)
   ocultarFormularioPresupuesto();
   await cargarPresupuestos();
-
 }
 
 //eliminar presupuesto 
