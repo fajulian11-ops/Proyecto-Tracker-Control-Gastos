@@ -10,7 +10,7 @@ async function renderCategorias() {
       <!-- HEADER -->
       <div class="flex justify-between items-center p-5 border-b border-gray-50">
         <span class="text-sm font-medium text-gray-800">Listado de categorías</span>
-        <button onclick="mostrarFormularioCategoria()" class="text-xs bg-indigo-600 text-white px-3 py-2 rounded-lg">+ Agregar</button>
+        <button  onclick="mostrarFormularioCategoria()" class="text-xs bg-indigo-600 text-white px-3 py-2 rounded-lg">+ Agregar</button>
       </div>
 
       <!-- GRID DE CATEGORIAS -->
@@ -34,14 +34,93 @@ async function renderCategorias() {
           </div>
         </div>
         <div class="flex justify-end gap-2">
-          <button onclick="ocultarFormularioCategoria()" class="text-xs bg-gray-100 text-gray-500 px-4 py-2 rounded-lg">Cancelar</button>
-          <button onclick="guardarCategoria()" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-lg">Guardar</button>
+          <button  onclick="ocultarFormularioCategoria()" class="text-xs bg-gray-100 text-gray-500 px-4 py-2 rounded-lg">Cancelar</button>
+          <button  onclick="guardarCategoria()" class="text-xs bg-indigo-600 text-white px-4 py-2 rounded-lg">Guardar</button>
         </div>
       </div>
 
     </div>
   `;
 
-  
+  await cargarCategorias();
 }
 
+let categoriaEditandoId = null;
+
+async function cargarCategorias() {
+  const res = await api.getCategorias();
+  const categorias = res.data;
+
+  const grid = document.getElementById("grid-categorias");
+  grid.innerHTML = "";
+
+  for (let i = 0; i < categorias.length; i++) {
+    const cat = categorias[i];
+    grid.innerHTML += `
+      <div class="rounded-xl border border-gray-100 p-4 flex flex-col items-center text-center gap-2" style="background-color:${cat.color}">
+        <span class="text-2xl">${cat.icono}</span>
+        <span class="text-sm font-medium text-gray-700">${cat.nombre}</span>
+        <div class="flex gap-2 mt-1">
+          <button  onclick="editarCategoria('${cat.id}')" class="bg-white text-blue-600 px-2 py-1 rounded-lg text-xs">✏️</button>
+          <button  onclick="eliminarCategoria('${cat.id}')" class="bg-white text-red-500 px-2 py-1 rounded-lg text-xs">🗑️</button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function mostrarFormularioCategoria() {
+  categoriaEditandoId = null;
+  document.getElementById("form-titulo-cat").textContent = "Nueva categoría";
+  document.getElementById("input-nombre-cat").value = "";
+  document.getElementById("input-icono-cat").value = "";
+  document.getElementById("input-color-cat").value = "#eef2ff";
+  document.getElementById("formulario-categoria").classList.remove("hidden");
+}
+
+function ocultarFormularioCategoria() {
+  document.getElementById("formulario-categoria").classList.add("hidden");
+}
+
+async function guardarCategoria() {
+  const nombre = document.getElementById("input-nombre-cat").value;
+  const icono = document.getElementById("input-icono-cat").value;
+  const color = document.getElementById("input-color-cat").value;
+
+  if (!nombre || !icono) {
+    alert("Completá todos los campos");
+    return;
+  }
+
+  const categoria = { nombre, icono, color };
+
+  if (categoriaEditandoId) {
+    await api.updateCategorias(categoriaEditandoId, categoria);
+  } else {
+    await api.createCategorias(categoria);
+  }
+
+  ocultarFormularioCategoria();
+  await cargarCategorias();
+}
+
+async function editarCategoria(id) {
+  const res = await api.getCategorias();
+  const categoria = res.data.find(function (c) {
+    return String(c.id) === String(id);
+  });
+
+  categoriaEditandoId = id;
+  document.getElementById("form-titulo-cat").textContent = "Editar categoría";
+  document.getElementById("input-nombre-cat").value = categoria.nombre;
+  document.getElementById("input-icono-cat").value = categoria.icono;
+  document.getElementById("input-color-cat").value = categoria.color;
+  document.getElementById("formulario-categoria").classList.remove("hidden");
+}
+
+async function eliminarCategoria(id) {
+  if (confirm("¿Eliminar categoría?")) {
+    await api.deleteCategorias(id);
+    await cargarCategorias();
+  }
+}
