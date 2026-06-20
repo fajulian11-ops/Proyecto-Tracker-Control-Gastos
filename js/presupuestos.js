@@ -10,6 +10,7 @@ async function renderPresupuestos() {
       <div class="flex justify-between items-center p-5 border-b border-gray-50">
         <span class="text-sm font-medium text-gray-800">Presupuesto mensual</span>
         <button onclick="mostrarFormularioPresupuesto()" class="text-xs bg-gray-100 text-gray-500 px-3 py-2 rounded-lg">✏️ Editar</button>
+        <button onclick="eliminarPresupuesto('1')" class="text-xs bg-red-100 text-red-500 px-3 py-2 rounded-lg">🗑️ Eliminar</button>
       </div>
 
       <div class="p-5">
@@ -70,6 +71,67 @@ async function renderPresupuestos() {
       <div id="lista-categorias" class="p-5"></div>
     </div>
   `;
+  await cargarPresupuestos();
+}
+async function cargarPresupuestos() {
+  const mes = new Date().toISOString().slice(0, 7);
 
-  
+  //pido los datos a la appi 
+
+  const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
+  const resGastos = await axios.get("http://localhost:3000/gastos");
+
+  const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
+  const gastos = resGastos.data;
+  if (!presupuesto) {
+    document.getElementById("presupuesto-monto").textContent = "Sin presupuesto";
+    return;
+  }
+  const totalGastado = gastos.reduce((acc, g) => acc + g.monto, 0);
+  const disponible = presupuesto.monto - totalGastado;
+
+  //calculo de cuanto porcentaje del presupuesto de uso 
+  const porcentaje = Math.min(Math.round(totalGastado / presupuesto.monto * 100), 100);
+
+  document.getElementById("presupuesto-monto").textContent = `$${presupuesto.monto.toLocaleString()}`;
+  document.getElementById("presupuesto-gastado").textContent = `Gastado: $${totalGastado.toLocaleString()}`;
+  document.getElementById("presupuesto-pct").textContent = `${porcentaje}% usado`;
+  document.getElementById("presupuesto-bar").style.width = `${porcentaje}%`;
+  document.getElementById("stat-presupuesto").textContent = `$${presupuesto.monto.toLocaleString()}`;
+  document.getElementById("stat-gastado").textContent = `$${totalGastado.toLocaleString()}`;
+  document.getElementById("stat-disponible").textContent = `$${disponible.toLocaleString()}`;
+  document.querySelector('[onclick^="eliminarPresupuesto"]').setAttribute('onclick', `eliminarPresupuesto('${presupuesto.id}')`);
+}
+
+//presupuesto mensual BOTON
+function mostrarFormularioPresupuesto() {
+  document.getElementById("formulario-presupuesto").classList.remove("hidden");
+}
+function ocultarFormularioPresupuesto() {
+  document.getElementById("formulario-presupuesto").classList.add("hidden");
+}
+
+//boton guardar presupuesto (enviarlos a la api)
+async function guardarPresupuesto() {
+  const monto = document.getElementById("input-monto-presupuesto").value;
+  const mes = document.getElementById("input-mes-presupuesto").value;
+  const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
+  const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
+  if (presupuesto) {
+    await axios.patch(`http://localhost:3000/presupuestos/${presupuesto.id}`, { monto: Number(monto), mes });
+  } else {
+    await axios.post("http://localhost:3000/presupuestos", { monto: Number(monto), mes });
+  }
+  // .patch (edita) .post (crea)
+  ocultarFormularioPresupuesto();
+  await cargarPresupuestos();
+
+}
+
+//eliminar presupuesto 
+async function eliminarPresupuesto(id) {
+  const confirmar = confirm("¿Seguro que querés eliminar este presupuesto?");
+  if (!confirmar) return;
+  await axios.delete(`http://localhost:3000/presupuestos/${id}`);
+  await cargarPresupuestos();
 }

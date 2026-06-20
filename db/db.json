@@ -1,27 +1,34 @@
 {
-  "gastos": [
-    {
-      "id": 2,
-      "descripcion": "Uber",
-      "monto": 1500,
-      "fecha": "2026-06-04",
-      "categoriaId": 2
-    },
-    {
-      "id": 3,
-      "descripcion": "HBO",
-      "monto": 4300,
-      "fecha": "2026-06-01",
-      "categoriaId": 3
-    },
-    {
-      "id": 4,
-      "descripcion": "Alquiler",
-      "monto": 29500,
-      "fecha": "2026-06-01",
-      "categoriaId": 4
-    }
-  ],
+ "gastos": [
+  {
+    "id": "2",
+    "descripcion": "Uber",
+    "monto": 1500,
+    "fecha": "2026-06-04",
+    "categoriaId": 2
+  },
+  {
+    "id": "3",
+    "descripcion": "HBO",
+    "monto": 4300,
+    "fecha": "2026-06-01",
+    "categoriaId": 3
+  },
+  {
+    "id": "4",
+    "descripcion": "Alquiler",
+    "monto": 29500,
+    "fecha": "2026-06-01",
+    "categoriaId": 4
+  },
+  {
+    "descripcion": "hola",
+    "monto": 150000,
+    "fecha": "2026-06-12",
+    "categoriaId": 5,
+    "id": "FLf34BrD3wU"
+  }
+]
   "categorias": [
     {
       "id": "1",
@@ -56,9 +63,15 @@
   ],
   "presupuestos": [
     {
-      "id": "1",
-      "mes": "2026-06",
-      "monto": 60000
+      "monto": 0,
+      "mes": "2026-04",
+      "id": "s4XwQr_K_PM"
+    },
+    {
+      "monto": 500000,
+      "mes": "",
+      "id": "-Xz8hIMZibs"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
