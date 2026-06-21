@@ -1,46 +1,88 @@
 {
   "gastos": [
     {
-      "id": "2",
-      "descripcion": "Uber",
-      "monto": 1500,
-      "fecha": "2026-06-04",
-      "categoriaId": 2
-    },
-    {
-      "id": "3",
-      "descripcion": "HBO",
-      "monto": 4300,
-      "fecha": "2026-06-01",
-      "categoriaId": 3
-    },
-    {
-      "id": "4",
-      "descripcion": "Alquiler",
-      "monto": 29500,
-      "fecha": "2026-06-01",
-      "categoriaId": 4
-    },
-    {
       "descripcion": "hola",
       "monto": 150000,
       "fecha": "2026-06-12",
       "categoriaId": 5,
       "id": "FLf34BrD3wU"
+    },
+    {
+      "descripcion": "super",
+      "monto": 90000,
+      "fecha": "2026-06-21",
+      "categoriaId": 1,
+      "id": "Hyl6j1v1U1A"
+    },
+    {
+      "descripcion": "sube(una semana)",
+      "monto": 10000,
+      "fecha": "2026-06-20",
+      "categoriaId": 2,
+      "id": "lXePLu5UZM0"
+    },
+    {
+      "descripcion": "disney",
+      "monto": 25000,
+      "fecha": "2026-06-09",
+      "categoriaId": 3,
+      "id": "h3pPs6xlEzw"
+    },
+    {
+      "descripcion": "uber ida",
+      "monto": 4000,
+      "fecha": "2026-06-21",
+      "categoriaId": 2,
+      "id": "yxEoyaBjltw"
     }
   ],
   "categorias": [
-    { "id": 1, "nombre": "Comida", "icono": "🛒", "color": "#eef2ff" },
-    { "id": 2, "nombre": "Transporte", "icono": "🚌", "color": "#eff6ff" },
-    { "id": 3, "nombre": "Servicios Digitales", "icono": "🎮", "color": "#f5f3ff" },
-    { "id": 4, "nombre": "Vivienda", "icono": "🏠", "color": "#fff7ed" },
-    { "id": 5, "nombre": "Salud", "icono": "💊", "color": "#f0fdf4" }
+    {
+      "id": "1",
+      "nombre": "Comida",
+      "icono": "🛒",
+      "color": "#eef2ff"
+    },
+    {
+      "id": "2",
+      "nombre": "Transporte",
+      "icono": "🚌",
+      "color": "#eff6ff"
+    },
+    {
+      "id": "3",
+      "nombre": "Servicios Digitales",
+      "icono": "🎮",
+      "color": "#f5f3ff"
+    },
+    {
+      "id": "4",
+      "nombre": "Vivienda",
+      "icono": "🏠",
+      "color": "#fff7ed"
+    },
+    {
+      "id": "5",
+      "nombre": "Salud",
+      "icono": "💊",
+      "color": "#f0fdf4"
+    }
   ],
   "presupuestos": [
     {
-      "id": 1,
+      "monto": 454545,
+      "mes": "2026-01",
+      "id": "iBXDEoRD1YQ"
+    },
+    {
+      "monto": 45454545,
+      "mes": "2026-12",
+      "id": "gEC4MM_WSmY"
+    },
+    {
+      "monto": 500000,
       "mes": "2026-06",
-      "monto": 75000
+      "id": "ZJtLa3k1Q_M"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
