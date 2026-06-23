@@ -68,7 +68,8 @@ async function cargarGastos() {
   const resGastos = await api.getGastos();
   const resCategorias = await api.getCategorias();
 
-  const gastos = resGastos.data;
+  const mes = new Date().toISOString().slice(0, 7);
+const gastos = resGastos.data.filter(g => g.fecha.slice(0, 7) === mes);
   const categorias = resCategorias.data;
   
 
@@ -102,8 +103,8 @@ async function cargarGastos() {
         <td class="p-3 text-right text-red-500 font-medium">-$${gasto.monto.toLocaleString("es-AR")}</td>
         <td class="p-3">
           <div class="flex gap-2 justify-end">
-            <button onclick="editarGasto(${gasto.id})" class="bg-blue-50 text-blue-600 px-2 py-1 rounded-lg text-xs">✏️</button>
-            <button onclick="eliminarGasto(${gasto.id})" class="bg-red-50 text-red-500 px-2 py-1 rounded-lg text-xs">🗑️</button>
+            <button type="button" onclick="editarGasto(${gasto.id})" class="bg-blue-50 text-blue-600 px-2 py-1 rounded-lg text-xs">✏️</button>
+            <button type="button" onclick="eliminarGasto(${gasto.id})" class="bg-red-50 text-red-500 px-2 py-1 rounded-lg text-xs">🗑️</button>
           </div>
         </td>
       </tr>
@@ -130,12 +131,6 @@ async function guardarGasto() {
   const monto = Number(document.getElementById("input-monto").value);
   const fecha = document.getElementById("input-fecha").value;
   const categoriaId = Number(document.getElementById("input-categoria").value);
-    console.log("descripcion:", descripcion);
-console.log("monto:", monto);
-console.log("fecha:", fecha);
-console.log("categoriaId:", categoriaId);
-
-
   if (!descripcion || !monto || !fecha || !categoriaId) {
     alert("Completá todos los campos");
     return;
@@ -151,6 +146,7 @@ console.log("categoriaId:", categoriaId);
 
   ocultarFormulario();
   await cargarGastos();
+  console.log("fin guardarGasto");
 }
 
 async function editarGasto(id) {

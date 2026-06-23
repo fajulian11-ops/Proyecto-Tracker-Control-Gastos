@@ -86,17 +86,20 @@ function renderDashboard() {
   cargarDashboard();
 }
 
-    async function cargarDashboard() {
+  async function cargarDashboard() {
   try {
+    const mes = new Date().toISOString().slice(0, 7);
+
     const [resGastos, resCategorias, resPresupuestos] = await Promise.all([
       api.getGastos(),
       api.getCategorias(),
       api.getPresupuestos()
     ]);
 
-    const gastos = resGastos.data;
+    const gastos = resGastos.data.filter(g => g.fecha.slice(0, 7) === mes);
     const categorias = resCategorias.data;
-    const presupuesto = resPresupuestos.data[0]?.monto || 0;
+    const presupuestoDelMes = resPresupuestos.data.find(p => p.mes === mes);
+    const presupuesto = presupuestoDelMes?.monto || 0;
 
     const totalGastos = gastos.reduce(function(acc, g) { return acc + g.monto; }, 0);
     const balance = presupuesto - totalGastos;

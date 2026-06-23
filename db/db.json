@@ -27,6 +27,13 @@
       "monto": 29500,
       "fecha": "2026-06-01",
       "categoriaId": 4
+    },
+    {
+      "descripcion": "dfasdf",
+      "monto": 12312,
+      "fecha": "2026-06-11",
+      "categoriaId": 1,
+      "id": 5
     }
   ],
   "categorias": [
@@ -59,6 +66,12 @@
       "nombre": "Salud",
       "icono": "💊",
       "color": "#f0fdf4"
+    },
+    {
+      "nombre": "Educación",
+      "icono": ":)",
+      "color": "#eef2ff",
+      "id": 6
     }
   ],
   "presupuestos": [
