@@ -123,3 +123,4 @@ async function eliminarCategoria(id) {
     await api.deleteCategorias(id);
     await cargarCategorias();
   }
+}

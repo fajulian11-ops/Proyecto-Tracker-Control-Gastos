@@ -63,9 +63,19 @@
   ],
   "presupuestos": [
     {
-      "id": 1,
+      "monto": 454545,
+      "mes": "2026-01",
+      "id": "iBXDEoRD1YQ"
+    },
+    {
+      "monto": 45454545,
+      "mes": "2026-12",
+      "id": "gEC4MM_WSmY"
+    },
+    {
+      "monto": 500000,
       "mes": "2026-06",
-      "monto": 75000
+      "id": "ZJtLa3k1Q_M"
     }
   ]
 }

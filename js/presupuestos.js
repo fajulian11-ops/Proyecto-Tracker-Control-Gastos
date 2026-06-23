@@ -6,12 +6,12 @@ async function renderPresupuestos() {
     </div>
 
     <!-- CARD PRINCIPAL -->
-    <div class="bg-white rounded-2xl border border-gray-100 mb-4">
-      <div class="flex justify-between items-center p-5 border-b border-gray-50">
-        <span class="text-sm font-medium text-gray-800">Presupuesto mensual</span>
-        <button onclick="mostrarFormularioPresupuesto()" class="text-xs bg-gray-100 text-gray-500 px-3 py-2 rounded-lg">✏️ Editar</button>
-        <button onclick="eliminarPresupuesto('1')" class="text-xs bg-red-100 text-red-500 px-3 py-2 rounded-lg">🗑️ Eliminar</button>
-      </div>
+    <div class="flex justify-between items-center p-5 border-b border-gray-50">
+  <span class="text-sm font-medium text-gray-800">Presupuesto mensual</span>
+  <input id="selector-mes-presupuesto" type="month" onchange="cargarPresupuestos()" class="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-400" />
+  <button onclick="abrirFormularioPresupuesto()" class="text-xs bg-gray-100 text-gray-500 px-3 py-2 rounded-lg">✏️ Editar</button>
+  <button onclick="eliminarPresupuestos('1')" class="text-xs bg-red-100 text-red-500 px-3 py-2 rounded-lg">🗑️ Eliminar</button>
+</div>
 
       <div class="p-5">
         <div class="text-4xl font-medium text-gray-800 mb-1" id="presupuesto-monto">Cargando...</div>
@@ -27,6 +27,7 @@ async function renderPresupuestos() {
           </div>
         </div>
 
+      
         <div class="grid grid-cols-3 gap-3">
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-xs text-gray-400 mb-1">Presupuesto</div>
@@ -73,26 +74,47 @@ async function renderPresupuestos() {
   `;
   await cargarPresupuestos();
 }
+
+let presupuestoEditandoID = null;
+
 async function cargarPresupuestos() {
-  const mes = new Date().toISOString().slice(0, 7);
+  const resPresupuestos = await api.getPresupuestos();
+  const resGastos = await api.getGastos();
 
-  //pido los datos a la appi 
-
-  const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
-  const resGastos = await axios.get("http://localhost:3000/gastos");
-
-  const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
+  const presupuestos = resPresupuestos.data;
   const gastos = resGastos.data;
+
+  // selec
+  const select = document.getElementById("selector-mes-presupuesto")
+  const mesSeleccionado = select.value;
+  select.innerHTML = "";
+  for (let i = 0; i < presupuestos.length; i++) {
+    select.innerHTML += `<option value="${presupuestos[i].mes}">${presupuestos[i].mes}</option>`;
+  }
+  if (mesSeleccionado) {
+    select.value = mesSeleccionado;
+  }
+  const mes = select.value;
+  const presupuesto = presupuestos.find(p => p.mes === mes);
   if (!presupuesto) {
     document.getElementById("presupuesto-monto").textContent = "Sin presupuesto";
+    document.getElementById("presupuesto-gastado").textContent = "Gastado: $0";
+    document.getElementById("presupuesto-pct").textContent = "0% usado";
+    document.getElementById("presupuesto-bar").textContent = "0%";
+    document.getElementById("stat-presupuesto").textContent = "$0";
+    document.getElementById("stat-gastado").textContent = "$0";
+    document.getElementById("stat-disponible").textContent = "$0";
+    document.querySelector('[onclick^="abrirFormularioPresupuesto"]').textContent = "+ Agregar";
+    presupuestoEditandoID = null;
     return;
   }
+
   const totalGastado = gastos.reduce((acc, g) => acc + g.monto, 0);
   const disponible = presupuesto.monto - totalGastado;
+  const porcentaje = ((totalGastado / presupuesto.monto) * 100).toFixed(0);
+  presupuestoEditandoID = presupuesto.id;
 
-  //calculo de cuanto porcentaje del presupuesto de uso 
-  const porcentaje = Math.min(Math.round(totalGastado / presupuesto.monto * 100), 100);
-
+  //mostrar datos 
   document.getElementById("presupuesto-monto").textContent = `$${presupuesto.monto.toLocaleString()}`;
   document.getElementById("presupuesto-gastado").textContent = `Gastado: $${totalGastado.toLocaleString()}`;
   document.getElementById("presupuesto-pct").textContent = `${porcentaje}% usado`;
@@ -100,37 +122,108 @@ async function cargarPresupuestos() {
   document.getElementById("stat-presupuesto").textContent = `$${presupuesto.monto.toLocaleString()}`;
   document.getElementById("stat-gastado").textContent = `$${totalGastado.toLocaleString()}`;
   document.getElementById("stat-disponible").textContent = `$${disponible.toLocaleString()}`;
-  document.querySelector('[onclick^="eliminarPresupuesto"]').setAttribute('onclick', `eliminarPresupuesto('${presupuesto.id}')`);
+  document.querySelector('[onclick^="eliminarPresupuestos"]').setAttribute('onclick', `eliminarPresupuestos('${presupuesto.id}')`);
+  document.querySelector('[onclick^="abrirFormularioPresupuesto"]').textContent = "✏️ Editar";
+
+  await cargarGastosPorCategoria(mes);
 }
 
-//presupuesto mensual BOTON
 function mostrarFormularioPresupuesto() {
+  presupuestoEditandoID = null;
+  document.getElementById("input-monto-presupuesto").value = "";
+  document.getElementById("input-mes-presupuesto").value = "";
   document.getElementById("formulario-presupuesto").classList.remove("hidden");
 }
+
 function ocultarFormularioPresupuesto() {
+
   document.getElementById("formulario-presupuesto").classList.add("hidden");
 }
 
-//boton guardar presupuesto (enviarlos a la api)
 async function guardarPresupuesto() {
-  const monto = document.getElementById("input-monto-presupuesto").value;
+  const monto = Number(document.getElementById("input-monto-presupuesto").value);
   const mes = document.getElementById("input-mes-presupuesto").value;
-  const resPresupuestos = await axios.get("http://localhost:3000/presupuestos");
-  const presupuesto = resPresupuestos.data.find(p => p.mes === mes);
-  if (presupuesto) {
-    await axios.patch(`http://localhost:3000/presupuestos/${presupuesto.id}`, { monto: Number(monto), mes });
-  } else {
-    await axios.post("http://localhost:3000/presupuestos", { monto: Number(monto), mes });
+
+  if (!monto || !mes) {
+    alert("Completá todos los campos");
+    return;
   }
-  // .patch (edita) .post (crea)
+
+  const presupuestoData = { monto, mes };
+  if (presupuestoEditandoID) {
+    await api.updatePresupuestos(presupuestoEditandoID, presupuestoData);
+  } else {
+    await api.createPresupuestos(presupuestoData);
+  }
   ocultarFormularioPresupuesto();
   await cargarPresupuestos();
 }
 
-//eliminar presupuesto 
-async function eliminarPresupuesto(id) {
-  const confirmar = confirm("¿Seguro que querés eliminar este presupuesto?");
-  if (!confirmar) return;
-  await axios.delete(`http://localhost:3000/presupuestos/${id}`);
-  await cargarPresupuestos();
+async function editarPresupuesto(id) {
+  const res = await api.getPresupuestos();
+  const presupuesto = res.data.find(p => p.id === id);
+  presupuestoEditandoID = id;
+
+  document.getElementById("input-monto-presupuesto").value = presupuesto.monto;
+  document.getElementById("input-mes-presupuesto").value = presupuesto.mes;
+  document.getElementById("formulario-presupuesto").classList.remove("hidden");
+}
+
+async function eliminarPresupuestos(id) {
+  if (confirm("¿Eliminar presupuesto?")) {
+    await api.deletePresupuestos(id);
+    await cargarPresupuestos();
+  }
+}
+
+function abrirFormularioPresupuesto() {
+  if (presupuestoEditandoID) {
+    editarPresupuesto(presupuestoEditandoID);
+  } else {
+    mostrarFormularioPresupuesto();
+  }
+}
+
+//gastos por categoria 
+
+async function cargarGastosPorCategoria(mes) {
+  const resGastos = await api.getGastos();
+  const resCategorias = await api.getCategorias();
+
+  const gastos = resGastos.data;
+  const categorias = resCategorias.data;
+
+  const gastosDelMes = [];
+  for (let i = 0; i < gastos.length; i++) {
+    if (gastos[i].fecha.startsWith(mes)) {
+      gastosDelMes.push(gastos[i]);
+    }
+  }
+
+  let html = "";
+
+  for (let i = 0; i < categorias.length; i++) {
+    const cat = categorias[i];
+    let totalCategoria = 0;
+
+    for (let j = 0; j < gastosDelMes.length; j++) {
+      if (gastosDelMes[j].categoriaId === Number(cat.id)) {
+        totalCategoria += gastosDelMes[j].monto;
+      }
+    }
+
+    if (totalCategoria > 0) {
+      html += `
+        <div class="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
+          <div class="flex items-center gap-2">
+            <span>${cat.icono}</span>
+            <span class="text-sm text-gray-700">${cat.nombre}</span>
+          </div>
+          <span class="text-sm font-medium text-gray-800">$${totalCategoria.toLocaleString()}</span>
+        </div>
+      `;
+    }
+  }
+
+  document.getElementById("lista-categorias").innerHTML = html || "<p class='text-sm text-gray-400'>No hay gastos este mes</p>";
 }
