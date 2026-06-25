@@ -72,7 +72,7 @@
 
     <!-- Footer -->
     <div class="mt-auto px-5 pt-4 border-t border-gray-100 relative">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="cambiarMenuCuentas()">
+      <div class="flex items-center gap-3 ">
         <div
           class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-xs font-medium text-indigo-600"
           id="usuario-iniciales">FA</div>
@@ -137,26 +137,10 @@
     // Cargar dashboard al inicio
     navigate("dashboard");
 
-// cambio de cuenta-usuarario
-      const cuentas = [
-        { nombre: "Sol Geronimo", iniciales: "SG", color: "bg-pink-50 text-pink-600" },
-        { nombre: "Lucas Carrizo", iniciales: "LC", color: "bg-green-50 text-green-600" },
-        { nombre: "Facundo Amado", iniciales: "FA", color: "bg-indigo-50 text-indigo-600" },
-        { nombre: "Geremias Pereyra", iniciales: "GP", color: "bg-orange-50 text-orange-600" },
-        { nombre: "Ismael Chavez", iniciales: "IC", color: "bg-purple-50 text-purple-600" }
-      ];
 
-      let cuentaActual = 0;
+     
 
-      function cambiarMenuCuentas() {
-        cuentaActual = (cuentaActual + 1) % cuentas.length;
-        const usuario = cuentas[cuentaActual];
-        document.getElementById("usuario-nombre").textContent = usuario.nombre;
-        const colorIniciales = document.getElementById("usuario-iniciales");
-        colorIniciales.textContent = usuario.iniciales;
-        colorIniciales.className = `w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${usuario.color}`;
-      }
-
+     
   </script>
 
 </body>

@@ -20,13 +20,6 @@
       "monto": 4300,
       "fecha": "2026-06-01",
       "categoriaId": 3
-    },
-    {
-      "id": 4,
-      "descripcion": "Alquiler",
-      "monto": 29500,
-      "fecha": "2026-06-01",
-      "categoriaId": 4
     }
   ],
   "categorias": [
@@ -49,28 +42,10 @@
       "color": "#f5f3ff"
     },
     {
-      "id": 4,
-      "nombre": "Vivienda",
-      "icono": "🏠",
-      "color": "#fff7ed"
-    },
-    {
       "id": 5,
       "nombre": "Salud",
       "icono": "💊",
       "color": "#f0fdf4"
-    },
-    {
-      "nombre": "Educación",
-      "icono": ":)",
-      "color": "#eef2ff",
-      "id": 6
-    },
-    {
-      "nombre": "pura",
-      "icono": ":d",
-      "color": "#fff0f0",
-      "id": 7
     }
   ],
   "presupuestos": [
