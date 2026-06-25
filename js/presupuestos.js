@@ -85,16 +85,36 @@ async function cargarPresupuestos() {
   const gastos = resGastos.data;
 
   // selec
-  const select = document.getElementById("selector-mes-presupuesto")
-  const mesSeleccionado = select.value;
-  select.innerHTML = "";
-  for (let i = 0; i < presupuestos.length; i++) {
+  const select = document.getElementById("selector-mes-presupuesto");
+const mesSeleccionado = select.value;
+select.innerHTML = "";
+for (let i = 0; i < presupuestos.length; i++) {
     select.innerHTML += `<option value="${presupuestos[i].mes}">${presupuestos[i].mes}</option>`;
-  }
-  if (mesSeleccionado) {
+}
+
+if (mesSeleccionado) {
     select.value = mesSeleccionado;
-  }
+} else {
+    const hoy = new Date();
+    const mesActual = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}`;
+    select.value = mesActual; 
+}
   const mes = select.value;
+      if (!mes) {
+    document.getElementById("presupuesto-monto").textContent = "Sin presupuesto";
+    document.getElementById("presupuesto-gastado").textContent = "Gastado: $0";
+    document.getElementById("presupuesto-pct").textContent = "0% usado";
+    document.getElementById("presupuesto-bar").style.width = "0%";
+    document.getElementById("stat-presupuesto").textContent = "$0";
+    document.getElementById("stat-gastado").textContent = "$0";
+    document.getElementById("stat-disponible").textContent = "$0";
+    document.querySelector('[onclick^="abrirFormularioPresupuesto"]').textContent = "+ Agregar";
+    document.getElementById("lista-categorias").innerHTML = "<p class='text-sm text-gray-400'>No hay gastos este mes</p>";
+    presupuestoEditandoID = null;
+    
+    return;
+  }
+  
   const presupuesto = presupuestos.find(p => p.mes === mes);
   if (!presupuesto) {
     document.getElementById("presupuesto-monto").textContent = "Sin presupuesto";
@@ -106,7 +126,9 @@ async function cargarPresupuestos() {
     document.getElementById("stat-disponible").textContent = "$0";
     document.querySelector('[onclick^="abrirFormularioPresupuesto"]').textContent = "+ Agregar";
     presupuestoEditandoID = null;
+    await cargarGastosPorCategoria(mes);
     return;
+    
   }
 
   const totalGastado = gastos.reduce((acc, g) => acc + g.monto, 0);

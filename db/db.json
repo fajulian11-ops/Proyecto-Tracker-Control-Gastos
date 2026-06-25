@@ -27,13 +27,6 @@
       "monto": 29500,
       "fecha": "2026-06-01",
       "categoriaId": 4
-    },
-    {
-      "descripcion": "dfasdf",
-      "monto": 12312,
-      "fecha": "2026-06-11",
-      "categoriaId": 1,
-      "id": 5
     }
   ],
   "categorias": [
@@ -72,23 +65,19 @@
       "icono": ":)",
       "color": "#eef2ff",
       "id": 6
+    },
+    {
+      "nombre": "pura",
+      "icono": ":d",
+      "color": "#fff0f0",
+      "id": 7
     }
   ],
   "presupuestos": [
     {
-      "monto": 454545,
-      "mes": "2026-01",
-      "id": "iBXDEoRD1YQ"
-    },
-    {
-      "monto": 45454545,
-      "mes": "2026-12",
-      "id": "gEC4MM_WSmY"
-    },
-    {
-      "monto": 500000,
+      "monto": 10000000,
       "mes": "2026-06",
-      "id": "ZJtLa3k1Q_M"
+      "id": 1
     }
   ]
 }
